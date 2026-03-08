@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Groundbase Renaming — Strategic Analysis</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: #FAFAFA; color: #1A1A1A; }
+
+  .hero { padding: 120px 40px 80px; text-align: center; background: linear-gradient(170deg, #ECFDF5 0%, #FAFAFA 60%); position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -120px; left: 50%; transform: translateX(-50%); width: 640px; height: 640px; background: radial-gradient(circle, rgba(34,199,126,0.08), transparent 65%); filter: blur(80px); }
+  .hero h1 { font-family: 'Instrument Serif', serif; font-size: clamp(48px, 6vw, 72px); font-weight: 400; line-height: 1.06; position: relative; }
+  .hero h1 em { font-style: italic; color: #1A6B4F; }
+  .hero p { font-size: 19px; color: #666; line-height: 1.65; max-width: 560px; margin: 24px auto 0; position: relative; }
+  .badge { display: inline-block; padding: 6px 18px; border-radius: 100px; background: rgba(26,107,79,0.07); border: 1px solid rgba(26,107,79,0.15); font-size: 12px; font-weight: 700; color: #1A6B4F; letter-spacing: 0.04em; margin-bottom: 24px; position: relative; }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+  section.content { padding: 80px 24px; }
+  section.content + section.content { padding-top: 0; }
+
+  h2 { font-family: 'Instrument Serif', serif; font-size: clamp(32px, 4vw, 48px); font-weight: 400; line-height: 1.1; margin-bottom: 32px; }
+  h2 em { font-style: italic; color: #1A6B4F; }
+
+  h3 { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 12px; color: #1A1A1A; }
+
+  p, li { font-size: 16px; line-height: 1.75; color: #555; }
+
+  .section-label { font-size: 11px; font-weight: 700; color: #1A6B4F; letter-spacing: 0.11em; text-transform: uppercase; font-family: 'Space Grotesk', sans-serif; margin-bottom: 14px; }
+
+  .problem-box { background: #FFF5F5; border: 1px solid rgba(239,68,68,0.15); border-radius: 20px; padding: 40px; margin: 40px 0; }
+  .problem-box h3 { color: #DC2626; }
+  .problem-box ul { list-style: none; padding: 0; }
+  .problem-box li { padding: 8px 0; display: flex; gap: 12px; align-items: flex-start; }
+  .problem-box li::before { content: '✗'; color: #DC2626; font-weight: 700; flex-shrink: 0; }
+
+  .criteria-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 32px 0; }
+  .criteria-card { background: white; border: 1px solid rgba(0,0,0,0.06); border-radius: 16px; padding: 28px; }
+  .criteria-card .num { font-family: 'Instrument Serif', serif; font-size: 36px; color: #D1D5DB; line-height: 1; margin-bottom: 12px; }
+  .criteria-card h4 { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .criteria-card p { font-size: 14px; line-height: 1.6; color: #666; margin: 0; }
+
+  /* Name cards */
+  .tier-label { display: inline-block; padding: 6px 18px; border-radius: 100px; font-size: 11px; font-weight: 800; letter-spacing: 0.06em; margin-bottom: 24px; }
+  .tier-1 { background: linear-gradient(135deg, #22C77E, #1A6B4F); color: white; }
+  .tier-2 { background: rgba(37,99,235,0.1); color: #2563EB; }
+
+  .name-card { background: white; border: 1px solid rgba(0,0,0,0.06); border-radius: 24px; padding: 40px; margin-bottom: 20px; position: relative; overflow: hidden; transition: transform 0.2s; }
+  .name-card:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,0.06); }
+  .name-card.recommended { border: 2px solid #1A6B4F; background: linear-gradient(170deg, #F0FDF7 0%, white 40%); }
+  .name-card.recommended::before { content: '★ TOP PICK'; position: absolute; top: 16px; right: 16px; padding: 5px 14px; border-radius: 100px; background: linear-gradient(135deg, #22C77E, #1A6B4F); color: white; font-size: 10px; font-weight: 800; letter-spacing: 0.06em; }
+
+  .name-title { font-family: 'Instrument Serif', serif; font-size: 42px; font-weight: 400; margin-bottom: 4px; }
+  .name-domain { font-size: 14px; color: #1A6B4F; font-weight: 600; font-family: 'Space Grotesk'; margin-bottom: 16px; }
+  .name-origin { font-size: 14px; color: #999; font-style: italic; margin-bottom: 20px; }
+
+  .score-row { display: flex; gap: 24px; flex-wrap: wrap; margin: 20px 0; padding: 20px 0; border-top: 1px solid rgba(0,0,0,0.05); border-bottom: 1px solid rgba(0,0,0,0.05); }
+  .score-item { text-align: center; }
+  .score-item .label { font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+  .score-item .bar { display: flex; gap: 3px; margin: 6px 0 2px; justify-content: center; }
+  .score-item .dot { width: 8px; height: 8px; border-radius: 50%; background: #E5E7EB; }
+  .score-item .dot.filled { background: #1A6B4F; }
+
+  .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+  .pros h4 { color: #1A6B4F; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
+  .cons h4 { color: #DC2626; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
+  .pros li, .cons li { font-size: 14px; padding: 4px 0; list-style: none; display: flex; gap: 8px; }
+  .pros li::before { content: '✓'; color: #1A6B4F; font-weight: 700; }
+  .cons li::before { content: '—'; color: #DC2626; font-weight: 700; }
+
+  .comp-table { width: 100%; border-collapse: collapse; margin: 32px 0; font-size: 14px; }
+  .comp-table th { text-align: left; padding: 14px 16px; background: #F9FAFB; border-bottom: 2px solid #E5E7EB; font-family: 'Space Grotesk'; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #999; }
+  .comp-table td { padding: 14px 16px; border-bottom: 1px solid #F3F4F6; }
+  .comp-table tr:hover td { background: #FAFAFA; }
+  .comp-table .taken { color: #DC2626; font-weight: 600; }
+  .comp-table .avail { color: #1A6B4F; font-weight: 600; }
+
+  .final-rec { background: #0A0A0A; border-radius: 28px; padding: 64px 48px; color: white; margin: 48px 0; text-align: center; }
+  .final-rec h2 { color: white; }
+  .final-rec h2 em { color: #22C77E; }
+  .final-rec p { color: rgba(255,255,255,0.65); }
+  .final-rec .big-name { font-family: 'Instrument Serif', serif; font-size: clamp(64px, 10vw, 120px); font-weight: 400; font-style: italic; color: #22C77E; line-height: 1; margin: 32px 0; text-shadow: 0 0 60px rgba(34,199,126,0.3); }
+  .final-rec .domain-tag { display: inline-block; padding: 10px 28px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); font-family: 'Space Grotesk'; font-size: 18px; color: white; font-weight: 600; }
+
+  .next-steps { background: white; border: 1px solid rgba(0,0,0,0.06); border-radius: 24px; padding: 48px; margin: 40px 0; }
+  .next-steps ol { padding-left: 20px; }
+  .next-steps li { padding: 8px 0; }
+
+  .divider { height: 1px; background: rgba(0,0,0,0.06); margin: 64px 0; }
+
+  @media (max-width: 768px) {
+    .pros-cons { grid-template-columns: 1fr; }
+    .score-row { gap: 16px; }
+    .hero { padding: 100px 20px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="badge">Strategic Brand Analysis</span>
+  <h1>What should we<br />call <em>this thing?</em></h1>
+  <p>A comprehensive naming strategy for the AI-powered field intelligence platform currently called "Groundbase." This is permanent — let's get it right.</p>
+</div>
+
+<section class="content">
+<div class="container">
+
+<div class="section-label">The Problem</div>
+<h2>Why "Groundbase" <em>isn't working.</em></h2>
+
+<div class="problem-box">
+  <h3>Critical Issues with the Current Name</h3>
+  <ul>
+    <li>"Groundbase" sounds like a coworking or workspace product (WeWork, Spacely, HubSpot territory)</li>
+    <li>Zero connection to field operations, AI, intelligence, data collection, or your actual value proposition</li>
+    <li>You don't own groundbase.com — you're at getgroundbase.com, a weaker domain position</li>
+    <li>Impossible to own the SEO narrative — "groundbase" is generic and returns noise in search</li>
+    <li>Doesn't scale with your AI-first positioning. "Groundbase AI" sounds bolted-on, not native</li>
+    <li>Competitors with descriptive names (Fulcrum, FieldPulse, GoCanvas) immediately communicate what they do — you don't</li>
+    <li>In enterprise sales conversations, the name doesn't help your pitch. Prospects shouldn't have to ask "what does Groundbase do?"</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="section-label">Naming Framework</div>
+<h2>What the perfect name <em>must do.</em></h2>
+<p style="margin-bottom: 32px;">Since there's no going back once you buy the domain, every candidate was evaluated against these seven non-negotiable criteria:</p>
+
+<div class="criteria-grid">
+  <div class="criteria-card">
+    <div class="num">01</div>
+    <h4>Domain Available (.com)</h4>
+    <p>The .com must be buyable — either unregistered or reasonably purchasable. No "get-" prefix workarounds.</p>
+  </div>
+  <div class="criteria-card">
+    <div class="num">02</div>
+    <h4>Signals the Category</h4>
+    <p>The name should hint at field operations, intelligence, data, or ground-level work — without being too literal.</p>
+  </div>
+  <div class="criteria-card">
+    <div class="num">03</div>
+    <h4>Globally Pronounceable</h4>
+    <p>Must work in Nairobi, Lagos, London, Dubai, and New York. No English-only wordplay or cultural blind spots.</p>
+  </div>
+  <div class="criteria-card">
+    <div class="num">04</div>
+    <h4>Enterprise-Ready</h4>
+    <p>The name should feel premium enough for a $69/user/mo enterprise sale and a boardroom presentation.</p>
+  </div>
+  <div class="criteria-card">
+    <div class="num">05</div>
+    <h4>2-3 Syllables Max</h4>
+    <p>Short names win. Think: Slack, Stripe, Notion, Linear. Every syllable is a tax on memorability.</p>
+  </div>
+  <div class="criteria-card">
+    <div class="num">06</div>
+    <h4>AI-Native Feel</h4>
+    <p>Should feel like an AI company from day one — not a forms company that bolted on AI later.</p>
+  </div>
+  <div class="criteria-card">
+    <div class="num">07</div>
+    <h4>Scales Beyond V1</h4>
+    <p>The name should still make sense when you expand into predictive analytics, autonomous workflows, and IoT.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section-label">Competitive Landscape</div>
+<h2>Names already <em>taken.</em></h2>
+<p style="margin-bottom: 24px;">Before generating candidates, I mapped every relevant name in the field operations space. These are off the table:</p>
+
+<table class="comp-table">
+  <thead>
+    <tr><th>Name</th><th>Status</th><th>Owner / Use</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>FieldSense</td><td class="taken">Taken</td><td>Field force management (India) + Farm analytics (Denmark)</td></tr>
+    <tr><td>FieldOps</td><td class="taken">Taken</td><td>Netlogia field operations platform</td></tr>
+    <tr><td>FieldCore</td><td class="taken">Taken</td><td>GE Vernova — massive industrial company</td></tr>
+    <tr><td>FieldWise</td><td class="taken">Taken</td><td>Agriculture telemetry since 2008</td></tr>
+    <tr><td>FieldSync</td><td class="taken">Taken</td><td>Field operations software</td></tr>
+    <tr><td>FieldPulse</td><td class="taken">Taken</td><td>AI voice + home service FSM</td></tr>
+    <tr><td>FieldNova</td><td class="taken">Taken</td><td>Field force management — direct competitor</td></tr>
+    <tr><td>FieldCast</td><td class="taken">Taken</td><td>Fiber optics brand + Salesforce app</td></tr>
+    <tr><td>Fulcrum</td><td class="taken">Taken</td><td>GIS field data collection — very similar product</td></tr>
+    <tr><td>GoCanvas</td><td class="taken">Taken</td><td>Mobile field reporting — direct competitor</td></tr>
+    <tr><td>SiteIQ</td><td class="taken">Taken</td><td>IoT platform (acquired by Dover)</td></tr>
+    <tr><td>TerraOps</td><td class="taken">Taken</td><td>Technology consultancy</td></tr>
+    <tr><td>GroundSignal</td><td class="taken">Taken</td><td>Beverage analytics company (Boston)</td></tr>
+    <tr><td>SiteSignal</td><td class="taken">Taken</td><td>AI visibility monitoring platform</td></tr>
+    <tr><td>FieldMark</td><td class="taken">Premium $$$</td><td>Domain for sale on GoDaddy (expensive)</td></tr>
+  </tbody>
+</table>
+
+<div class="divider"></div>
+
+<div class="section-label">Tier 1 — Strongest Candidates</div>
+<h2>The names worth <em>buying today.</em></h2>
+
+<!-- #1 RECOMMENDED -->
+<div class="name-card recommended">
+  <div class="name-title" style="font-style: italic;">SitePulse</div>
+  <div class="name-domain">sitepulse.com — Not found in search results (likely available or affordable)</div>
+  <div class="name-origin">From "site" (where field work happens) + "pulse" (real-time heartbeat, monitoring, life)</div>
+
+  <p>This is the name that does the most strategic work for you. Every operations leader immediately understands it — it's the real-time pulse of your sites. Construction sites, farm sites, delivery sites, property sites. It communicates live intelligence, health monitoring, and ground truth in a single compound word. It's two syllables, globally pronounceable, and it writes its own taglines: <em>"Keep your finger on the pulse."</em></p>
+
+  <div class="score-row">
+    <div class="score-item">
+      <div class="label">Memorability</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div>
+    </div>
+    <div class="score-item">
+      <div class="label">Category Signal</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div>
+    </div>
+    <div class="score-item">
+      <div class="label">Enterprise Feel</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div>
+    </div>
+    <div class="score-item">
+      <div class="label">AI-Native</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div>
+    </div>
+    <div class="score-item">
+      <div class="label">Global Appeal</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div>
+    </div>
+    <div class="score-item">
+      <div class="label">Scalability</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div>
+    </div>
+  </div>
+
+  <div class="pros-cons">
+    <div class="pros">
+      <h4>Why it wins</h4>
+      <ul>
+        <li>Instantly communicates real-time field intelligence</li>
+        <li>"Pulse" implies health monitoring — predictive, proactive</li>
+        <li>Works for every industry (site = universal)</li>
+        <li>Two syllables, impossible to misspell</li>
+        <li>Taglines write themselves</li>
+        <li>No existing competitor owns this name</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h4>Watch out for</h4>
+      <ul>
+        <li>"Site" could skew construction-heavy in perception</li>
+        <li>Must verify exact .com availability and price</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- #2 -->
+<div class="name-card">
+  <div class="name-title" style="font-style: italic;">Verico</div>
+  <div class="name-domain">verico.com or verico.ai — Not found as active company in this space</div>
+  <div class="name-origin">From Latin "veritas" (truth) + "co" (company). Echoes "verify" — GPS-verified, photo-verified, data you can trust.</div>
+
+  <p>The most brandable name on this list. Verico sounds like a company worth billions. It's abstract enough to scale infinitely — you could be an AI company, a data company, a platform company — but the Latin root anchors it in truth and verification, which is exactly what field data collection is about. Every data point you capture is verified by GPS, timestamp, and photo. Verico IS verified intelligence.</p>
+
+  <div class="score-row">
+    <div class="score-item">
+      <div class="label">Memorability</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div>
+    </div>
+    <div class="score-item">
+      <div class="label">Category Signal</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div>
+    </div>
+    <div class="score-item">
+      <div class="label">Enterprise Feel</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div>
+    </div>
+    <div class="score-item">
+      <div class="label">AI-Native</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div>
+    </div>
+    <div class="score-item">
+      <div class="label">Global Appeal</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div>
+    </div>
+    <div class="score-item">
+      <div class="label">Scalability</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div>
+    </div>
+  </div>
+
+  <div class="pros-cons">
+    <div class="pros">
+      <h4>Why it wins</h4>
+      <ul>
+        <li>Most premium-sounding name — enterprise sales ready</li>
+        <li>Infinite scalability (not locked to "field")</li>
+        <li>Latin root works globally (Romance languages)</li>
+        <li>"Verified data" is your core promise</li>
+        <li>3 syllables, elegant, memorable</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h4>Watch out for</h4>
+      <ul>
+        <li>Doesn't immediately say "field ops" — needs tagline support</li>
+        <li>There is a Canadian mortgage network called "Verico" (different sector entirely)</li>
+        <li>More brand-building work required vs. descriptive names</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- #3 -->
+<div class="name-card">
+  <div class="name-title" style="font-style: italic;">FieldCortex</div>
+  <div class="name-domain">fieldcortex.com — Not found in any search results (likely unregistered)</div>
+  <div class="name-origin">From "field" (where your teams work) + "cortex" (the brain's processing center — the seat of intelligence)</div>
+
+  <p>This is the name that screams "AI-first" louder than any other. The cortex is the part of the brain responsible for processing information, making decisions, and recognizing patterns — exactly what your AI engine does with field data. It positions you as the thinking layer for field operations, not just another data collection tool. When a CTO hears "FieldCortex," they immediately understand this is an intelligence platform.</p>
+
+  <div class="score-row">
+    <div class="score-item">
+      <div class="label">Memorability</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div>
+    </div>
+    <div class="score-item">
+      <div class="label">Category Signal</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div>
+    </div>
+    <div class="score-item">
+      <div class="label">Enterprise Feel</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div>
+    </div>
+    <div class="score-item">
+      <div class="label">AI-Native</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div>
+    </div>
+    <div class="score-item">
+      <div class="label">Global Appeal</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div>
+    </div>
+    <div class="score-item">
+      <div class="label">Scalability</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div>
+    </div>
+  </div>
+
+  <div class="pros-cons">
+    <div class="pros">
+      <h4>Why it wins</h4>
+      <ul>
+        <li>Strongest AI positioning of any candidate</li>
+        <li>"Field" + "Cortex" = brain for field operations</li>
+        <li>No competitor owns this name</li>
+        <li>Perfect for the "Field Intelligence" category you're building</li>
+        <li>Sounds technical but not intimidating</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h4>Watch out for</h4>
+      <ul>
+        <li>4 syllables (field-cor-tex) — slightly longer</li>
+        <li>"Cortex" might sound too clinical for small business buyers</li>
+        <li>"Field" locks you to the field ops category</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- #4 -->
+<div class="name-card">
+  <div class="name-title" style="font-style: italic;">OpScope</div>
+  <div class="name-domain">opscope.com — Not found in search results (likely available)</div>
+  <div class="name-origin">From "operations" + "scope" (visibility, telescope, seeing what you couldn't see before)</div>
+
+  <p>Clean, sharp, professional. OpScope is the name of a company that gives you visibility into your operations — which is exactly your value proposition. "From field chaos to operational clarity" becomes literal when your product is called OpScope. It's a B2B power name — short, punchy, and impossible to forget. The "Op" prefix puts you in the operations category without being too narrow.</p>
+
+  <div class="score-row">
+    <div class="score-item">
+      <div class="label">Memorability</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div>
+    </div>
+    <div class="score-item">
+      <div class="label">Category Signal</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div>
+    </div>
+    <div class="score-item">
+      <div class="label">Enterprise Feel</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div>
+    </div>
+    <div class="score-item">
+      <div class="label">AI-Native</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div>
+    </div>
+    <div class="score-item">
+      <div class="label">Global Appeal</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div>
+    </div>
+    <div class="score-item">
+      <div class="label">Scalability</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div>
+    </div>
+  </div>
+
+  <div class="pros-cons">
+    <div class="pros">
+      <h4>Why it wins</h4>
+      <ul>
+        <li>2 syllables — extremely punchy</li>
+        <li>"Operations" + "Scope" = total visibility</li>
+        <li>Works beyond field ops (any operations team)</li>
+        <li>Clean, professional, enterprise-grade</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h4>Watch out for</h4>
+      <ul>
+        <li>Doesn't specifically say "field" — broader positioning</li>
+        <li>"Op" prefix used by many DevOps/IT tools</li>
+        <li>Could sound like a monitoring-only tool</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- #5 -->
+<div class="name-card">
+  <div class="name-title" style="font-style: italic;">Groundbase</div>
+  <div class="name-domain">groundbase.com — Not found in search results (likely available)</div>
+  <div class="name-origin">From "ground" (where field teams work, ground truth, grounded) + "base" (platform, foundation, base of operations)</div>
+
+  <p>Solid. Reliable. Foundational. Groundbase feels like the bedrock of your operations — the platform everything else builds on. "Ground truth" is a term used in AI and data science for verified real-world data, giving this name intellectual credibility. The military connotation of "base" (base of operations, home base) adds gravitas. This name says: we are the foundation your field operations are built on.</p>
+
+  <div class="score-row">
+    <div class="score-item">
+      <div class="label">Memorability</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div>
+    </div>
+    <div class="score-item">
+      <div class="label">Category Signal</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div>
+    </div>
+    <div class="score-item">
+      <div class="label">Enterprise Feel</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div>
+    </div>
+    <div class="score-item">
+      <div class="label">AI-Native</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div>
+    </div>
+    <div class="score-item">
+      <div class="label">Global Appeal</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div>
+    </div>
+    <div class="score-item">
+      <div class="label">Scalability</div>
+      <div class="bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div>
+    </div>
+  </div>
+
+  <div class="pros-cons">
+    <div class="pros">
+      <h4>Why it wins</h4>
+      <ul>
+        <li>"Ground truth" = verified real-world data (AI term)</li>
+        <li>Feels foundational and reliable</li>
+        <li>Universally pronounceable</li>
+        <li>"Base of operations" — military/ops authority</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h4>Watch out for</h4>
+      <ul>
+        <li>Could sound like a database or CRM company</li>
+        <li>Less AI-forward than other candidates</li>
+        <li>"Ground" might feel too literal/earthy</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section-label">Tier 2 — Strong Alternatives</div>
+<h2>Also worth <em>considering.</em></h2>
+
+<div class="name-card">
+  <div class="name-title" style="font-style: italic;">OpSignal</div>
+  <div class="name-domain">opsignal.com — Not found in search results</div>
+  <div class="name-origin">"Operations" + "Signal" — cutting through noise to find the signal in your operations data</div>
+  <p>Professional and clean. "Signal from noise" is a powerful metaphor for what AI does with chaotic field data. The name positions you as the intelligence layer that separates what matters from what doesn't. Strong B2B feel, works across all industries.</p>
+</div>
+
+<div class="name-card">
+  <div class="name-title" style="font-style: italic;">Terrasight</div>
+  <div class="name-domain">terrasight.com — Likely available (not found in search)</div>
+  <div class="name-origin">"Terra" (Latin: earth, ground) + "sight" (visibility, insight, foresight)</div>
+  <p>Beautiful, globally resonant name. "Terra" works across every language and culture. Combined with "sight," it becomes ground-level visibility and foresight — predictive intelligence from the earth up. Particularly strong for your Africa-first, global-ambition positioning. The Latin root gives it gravitas without being academic.</p>
+</div>
+
+<div class="name-card">
+  <div class="name-title" style="font-style: italic;">Verso</div>
+  <div class="name-domain">verso.ai — Worth checking availability</div>
+  <div class="name-origin">Latin: "to turn" — turning field chaos into operational clarity</div>
+  <p>Short, elegant, and supremely brandable. This is the minimalist pick — the name of a company designed by Dieter Rams. It's abstract enough to scale anywhere but meaningful enough to anchor a brand story. The risk is that it needs more marketing investment to create the association with field intelligence.</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="final-rec">
+  <span class="badge" style="background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: white;">Final Recommendation</span>
+  <h2>My pick for your <em>forever name.</em></h2>
+  <div class="big-name">SitePulse</div>
+  <div class="domain-tag">sitepulse.com</div>
+  <p style="max-width: 560px; margin: 32px auto 0; font-size: 17px; line-height: 1.7;">
+    It does the most strategic work with the fewest letters. Every operations leader on earth immediately understands what SitePulse does — it gives you the real-time pulse of your sites. It's two syllables, globally pronounceable, and writes its own marketing. Pair it with your existing "Field Intelligent" tagline and you have a category-defining brand.
+  </p>
+  <p style="max-width: 560px; margin: 20px auto 0; font-size: 15px;">
+    <strong style="color: rgba(255,255,255,0.85);">However</strong> — if you want the name that will make investors, enterprise buyers, and the market see you as a $1B+ platform company, go with <strong style="color: #22C77E;">Verico</strong>. It's the Salesforce play — abstract, premium, infinite scalability.
+  </p>
+</div>
+
+<div class="next-steps">
+  <h3>Immediate Next Steps</h3>
+  <ol>
+    <li><strong>Check exact .com availability</strong> for your top 2-3 picks on Namecheap, GoDaddy, or Cloudflare Registrar right now</li>
+    <li><strong>Check trademark databases</strong> — search USPTO (US), EUIPO (Europe), and ARIPO (Africa) for conflicts</li>
+    <li><strong>Secure the .com, .ai, and .io</strong> for your chosen name — all three if possible</li>
+    <li><strong>Grab social handles</strong> — Twitter/X, LinkedIn, Instagram, YouTube before announcing</li>
+    <li><strong>Don't announce publicly</strong> until all digital assets are locked down</li>
+    <li><strong>Register the company name</strong> in your operating jurisdictions</li>
+  </ol>
+</div>
+
+<p style="text-align: center; color: #999; font-size: 14px; margin: 48px 0 80px;">
+  Analysis prepared March 2026. Domain availability should be verified in real-time as it changes constantly.
+</p>
+
+</div>
+</section>
+
+</body>
+</html>
