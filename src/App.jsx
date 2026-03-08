@@ -8,6 +8,8 @@ import UseCases from "./pages/UseCases";
 import UseCaseDetail from "./pages/UseCaseDetail";
 import Pricing from "./pages/Pricing";
 import About from "./pages/About";
+import Articles from "./pages/Articles";
+import ArticleDetail from "./pages/ArticleDetail";
 
 function ScrollToTop() {
     const { pathname } = useLocation();
@@ -40,6 +42,8 @@ export default function App() {
                         <Route path="/use-cases/:slug" element={<UseCaseDetail />} />
                         <Route path="/pricing" element={<Pricing />} />
                         <Route path="/about" element={<About />} />
+                        <Route path="/articles" element={<Articles />} />
+                        <Route path="/articles/:slug" element={<ArticleDetail />} />
                     </Routes>
                 </Layout>
             </BrowserRouter>

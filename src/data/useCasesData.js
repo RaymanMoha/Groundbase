@@ -4,7 +4,7 @@ export const allUseCases = [
         ind: "Construction",
         title: "Site Inspections & Safety Compliance",
         desc: "Digitize safety checklists, daily progress reports, and quality inspections. AI flags non-compliance patterns and generates safety reports automatically.",
-        heroImage: "https://images.unsplash.com/photo-1504307651254-35680f356f27?q=80&w=1400&auto=format&fit=crop",
+        heroImage: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1400&auto=format&fit=crop",
         challenge: "Paper-based inspections mean critical safety data is often lost, delayed, or simply pencil-whipped without context. It’s impossible to track real-time compliance across multiple sites, leading to increased risk of accidents and costly OSHA fines.",
         solution: "With Groundbase, your field teams complete smart safety checklists right from their mobile devices—even offline. The forms enforce photo logic (e.g., 'Take a photo of the tied-off harness') to ensure genuine compliance. When anomalies are detected, the AI immediately alerts the safety manager and auto-generates the necessary compliance documentation.",
         features: [

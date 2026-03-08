@@ -81,8 +81,8 @@ const NAV_LINKS = [
     { label: "Platform", to: "/platform", dot: "#22C77E" },
     { label: "Solutions", to: "/solutions", dot: "#E8673C" },
     { label: "Use Cases", to: "/use-cases", dot: "#D97706" },
+    { label: "Articles", to: "/articles", dot: "#E8673C" },
     { label: "Pricing", to: "/pricing", dot: "#2563EB" },
-    { label: "About", to: "/about", dot: "#7C3AED" },
 ];
 
 // ─── NAV — Groundbase: clean typographic wordmark + active pill ───
@@ -331,7 +331,7 @@ export function Footer() {
                     </div>
                     {[
                         { t: "Product", l: [["Platform", "/platform"], ["Solutions", "/solutions"], ["Pricing", "/pricing"]] },
-                        { t: "Company", l: [["About", "/about"], ["Blog", "#"], ["Careers", "#"], ["Contact", "#"]] },
+                        { t: "Company", l: [["About", "/about"], ["Articles", "/articles"], ["Careers", "#"], ["Contact", "#"]] },
                         { t: "Legal", l: [["Privacy", "#"], ["Terms", "#"], ["Security", "#"]] },
                     ].map(col => (
                         <div key={col.t}>
