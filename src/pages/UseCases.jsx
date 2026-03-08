@@ -1,36 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { C, FadeIn } from "../shared";
+import { allUseCases } from "../data/useCasesData";
 
 export default function UseCases() {
     const [activeIndustry, setActiveIndustry] = useState("All");
 
     const industries = ["All", "Construction", "Agriculture", "Logistics", "Property Management", "Healthcare", "Manufacturing"];
 
-    const allCases = [
-        { ind: "Construction", title: "Site Inspections & Safety Compliance", desc: "Digitize safety checklists, daily progress reports, and quality inspections. AI flags non-compliance patterns and generates safety reports automatically." },
-        { ind: "Construction", title: "Heavy Equipment Tracking & Maintenance", desc: "Keep track of heavy machinery, schedule maintenance, and monitor usage across multiple sites. AI predicts part failures before they happen." },
-        { ind: "Construction", title: "Supply Chain & Material Tracking", desc: "Optimize construction supply chain flow, procurement, inventory, and stakeholder collaboration for maximum efficiency on-site." },
-
-        { ind: "Agriculture", title: "Farm Monitoring & Crop Management", desc: "Track crop health, weather conditions, soil data, and farm worker activities across your entire operation. AI predicts issues before they impact yields." },
-        { ind: "Agriculture", title: "Automated Harvest Yield Tracking", desc: "Streamline harvest logistics from field to processing. Predict yields, track worker productivity, and automate supply chain compliance reports." },
-
-        { ind: "Logistics", title: "Delivery Tracking & Fleet Management", desc: "Monitor deliveries, track driver performance, and manage multi-hub inventory in real-time. AI optimizes routes and predicts delivery delays." },
-        { ind: "Logistics", title: "Warehouse Safety Audits", desc: "Digital audits for warehouse condition, loading dock safety, and inventory accuracy. AI spots bottlenecks in your fulfillment operations." },
-
-        { ind: "Property Management", title: "Maintenance & Tenant Management", desc: "Digitize property inspections, maintenance workflows, and tenant communications. AI prioritizes requests and predicts maintenance needs." },
-        { ind: "Property Management", title: "Janitorial & Facilities Service Tracking", desc: "Track cleaning operations, supplies inventory, and staff schedules. Provide photo-verified proof of service for key stakeholder reporting." },
-
-        { ind: "Healthcare", title: "In-Home Care Mobile Workforce Tracking", desc: "Empower home healthcare workers with digital patient forms, secure offline data collection, and GPS-verified visits for seamless compliance." },
-        { ind: "Healthcare", title: "Medical Equipment Maintenance Logs", desc: "Digitize the inspection and calibration records for critical medical devices, automatically alerting technicians of upcoming service requirements." },
-
-        { ind: "Manufacturing", title: "Quality Control & Defect Tracking", desc: "Perform mobile quality checks on the assembly line. Vision AI automatically detects and logs defects, generating actionable shift reports." },
-        { ind: "Manufacturing", title: "Shift Handovers & Incident Reporting", desc: "Ensure smooth transitions between shifts with structured digital handovers. Log incidents quickly with voice-to-text and AI summarization." },
-    ];
-
     const displayedCases = activeIndustry === "All"
-        ? allCases
-        : allCases.filter(c => c.ind === activeIndustry);
+        ? allUseCases
+        : allUseCases.filter(c => c.ind === activeIndustry);
 
     return (
         <section style={{ padding: "160px 40px 140px", background: C.bgOff, minHeight: "100vh" }}>
@@ -82,7 +62,7 @@ export default function UseCases() {
                                     <p style={{ fontSize: 16, color: C.textSoft, lineHeight: 1.6, margin: "0 0 24px", fontFamily: "'DM Sans', sans-serif", flexGrow: 1 }}>
                                         {c.desc}
                                     </p>
-                                    <Link to="/solutions" style={{
+                                    <Link to={`/use-cases/${c.slug}`} style={{
                                         color: C.blue, fontWeight: 700, fontSize: 15, fontFamily: "'Space Grotesk', sans-serif",
                                         textDecoration: "none", display: "inline-flex", alignItems: "center"
                                     }}
