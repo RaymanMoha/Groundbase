@@ -4,6 +4,7 @@ import { Nav, Footer, GLOBAL_STYLES } from "./shared";
 import Home from "./pages/Home";
 import Platform from "./pages/Platform";
 import Solutions from "./pages/Solutions";
+import UseCases from "./pages/UseCases";
 import Pricing from "./pages/Pricing";
 import About from "./pages/About";
 
@@ -34,6 +35,7 @@ export default function App() {
                         <Route path="/" element={<Home />} />
                         <Route path="/platform" element={<Platform />} />
                         <Route path="/solutions" element={<Solutions />} />
+                        <Route path="/use-cases" element={<UseCases />} />
                         <Route path="/pricing" element={<Pricing />} />
                         <Route path="/about" element={<About />} />
                     </Routes>

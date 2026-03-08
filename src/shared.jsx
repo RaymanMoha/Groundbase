@@ -80,6 +80,7 @@ export function FadeIn({ children, delay = 0, y = 16, style = {} }) {
 const NAV_LINKS = [
     { label: "Platform", to: "/platform", dot: "#22C77E" },
     { label: "Solutions", to: "/solutions", dot: "#E8673C" },
+    { label: "Use Cases", to: "/use-cases", dot: "#D97706" },
     { label: "Pricing", to: "/pricing", dot: "#2563EB" },
     { label: "About", to: "/about", dot: "#7C3AED" },
 ];

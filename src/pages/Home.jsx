@@ -366,55 +366,105 @@ function Stats() {
 
 // ─── USE CASES ───
 function UseCasesPreview() {
-    const [active, setActive] = useState(0);
-    const cases = [
-        { industry: "Construction", icon: <HardHat size={16} />, title: "Site Inspections & Safety Compliance", desc: "Digitize safety checklists, daily progress reports, and quality inspections. AI flags non-compliance patterns and generates safety reports automatically.", metrics: ["73% faster inspections", "40% fewer safety incidents", "Instant compliance reports"] },
-        { industry: "Agriculture", icon: <Wheat size={16} />, title: "Farm Monitoring & Crop Management", desc: "Track crop health, weather conditions, soil data, and farm worker activities across your entire operation. AI predicts issues before they impact yields.", metrics: ["Real-time farm visibility", "Predictive crop insights", "Offline data capture"] },
-        { industry: "Logistics", icon: <Package size={16} />, title: "Delivery Tracking & Fleet Management", desc: "Monitor deliveries, track driver performance, and manage multi-hub inventory in real-time. AI optimizes routes and predicts delivery delays.", metrics: ["28% fewer missed deliveries", "GPS-verified activities", "Auto-generated reports"] },
-        { industry: "Property", icon: <Building2 size={16} />, title: "Maintenance & Tenant Management", desc: "Digitize property inspections, maintenance workflows, and tenant communications. AI prioritizes requests and predicts maintenance needs.", metrics: ["60% faster resolution", "Photo-verified inspections", "Predictive maintenance"] },
+    const [activeIndustry, setActiveIndustry] = useState("All");
+
+    const industries = ["All", "Construction", "Agriculture", "Logistics", "Property Management", "Healthcare", "Manufacturing"];
+
+    const allCases = [
+        { ind: "Construction", title: "Site Inspections & Safety Compliance", desc: "Digitize safety checklists, daily progress reports, and quality inspections. AI flags non-compliance patterns and generates safety reports automatically." },
+        { ind: "Construction", title: "Heavy Equipment Tracking & Maintenance", desc: "Keep track of heavy machinery, schedule maintenance, and monitor usage across multiple sites. AI predicts part failures before they happen." },
+        { ind: "Construction", title: "Supply Chain & Material Tracking", desc: "Optimize construction supply chain flow, procurement, inventory, and stakeholder collaboration for maximum efficiency on-site." },
+
+        { ind: "Agriculture", title: "Farm Monitoring & Crop Management", desc: "Track crop health, weather conditions, soil data, and farm worker activities across your entire operation. AI predicts issues before they impact yields." },
+        { ind: "Agriculture", title: "Automated Harvest Yield Tracking", desc: "Streamline harvest logistics from field to processing. Predict yields, track worker productivity, and automate supply chain compliance reports." },
+
+        { ind: "Logistics", title: "Delivery Tracking & Fleet Management", desc: "Monitor deliveries, track driver performance, and manage multi-hub inventory in real-time. AI optimizes routes and predicts delivery delays." },
+        { ind: "Logistics", title: "Warehouse Safety Audits", desc: "Digital audits for warehouse condition, loading dock safety, and inventory accuracy. AI spots bottlenecks in your fulfillment operations." },
+
+        { ind: "Property Management", title: "Maintenance & Tenant Management", desc: "Digitize property inspections, maintenance workflows, and tenant communications. AI prioritizes requests and predicts maintenance needs." },
+        { ind: "Property Management", title: "Janitorial & Facilities Service Tracking", desc: "Track cleaning operations, supplies inventory, and staff schedules. Provide photo-verified proof of service for key stakeholder reporting." },
+
+        { ind: "Healthcare", title: "In-Home Care Mobile Workforce Tracking", desc: "Empower home healthcare workers with digital patient forms, secure offline data collection, and GPS-verified visits for seamless compliance." },
+        { ind: "Healthcare", title: "Medical Equipment Maintenance Logs", desc: "Digitize the inspection and calibration records for critical medical devices, automatically alerting technicians of upcoming service requirements." },
+
+        { ind: "Manufacturing", title: "Quality Control & Defect Tracking", desc: "Perform mobile quality checks on the assembly line. Vision AI automatically detects and logs defects, generating actionable shift reports." },
+        { ind: "Manufacturing", title: "Shift Handovers & Incident Reporting", desc: "Ensure smooth transitions between shifts with structured digital handovers. Log incidents quickly with voice-to-text and AI summarization." },
     ];
-    const cs = cases[active];
+
+    const displayedCases = activeIndustry === "All"
+        ? allCases.slice(0, 6)
+        : allCases.filter(c => c.ind === activeIndustry);
+
     return (
         <section style={{ padding: "140px 40px", background: C.bgOff }}>
-            <div style={{ maxWidth: 1000, margin: "0 auto" }}>
-                <FadeIn>
-                    <div style={{ marginBottom: 56 }}>
-                        <span style={{ fontSize: 11, fontWeight: 700, color: C.orange, letterSpacing: "0.11em", textTransform: "uppercase", fontFamily: "'Space Grotesk'" }}>Use Cases</span>
-                        <h2 style={{ fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontSize: "clamp(36px, 5vw, 56px)", fontWeight: 400, color: "#0A0A0A", margin: "14px 0 0", lineHeight: 1.08 }}>
-                            Built for every industry.<br />Customized for yours.
+            <div className="use-cases-container" style={{ maxWidth: 1100, margin: "0 auto", display: "flex", gap: "60px", alignItems: "flex-start", flexWrap: "wrap", flexDirection: "row" }}>
+
+                {/* Sidebar Navigation */}
+                <div className="use-cases-sidebar" style={{ flex: "0 0 auto", width: "240px" }}>
+                    <div style={{ position: "sticky", top: 120 }}>
+                        <h3 style={{ fontSize: 16, fontWeight: 700, color: C.text, marginBottom: 24, fontFamily: "'Space Grotesk', sans-serif" }}>
+                            Use Cases For
+                        </h3>
+                        <div style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "flex-start" }}>
+                            {industries.map(ind => (
+                                <button
+                                    key={ind}
+                                    onClick={() => setActiveIndustry(ind)}
+                                    style={{
+                                        textAlign: "left", padding: 0,
+                                        background: "transparent",
+                                        color: activeIndustry === ind ? C.blue : C.textSoft,
+                                        fontFamily: "'Space Grotesk', sans-serif",
+                                        fontWeight: activeIndustry === ind ? 700 : 500,
+                                        fontSize: 15, border: "none", cursor: "pointer",
+                                        transition: "color 0.2s ease"
+                                    }}
+                                    onMouseEnter={e => { if (activeIndustry !== ind) e.currentTarget.style.color = C.text; }}
+                                    onMouseLeave={e => { if (activeIndustry !== ind) e.currentTarget.style.color = C.textSoft; }}
+                                >
+                                    {ind}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Main Content Grid */}
+                <div style={{ flex: "1 1 min(500px, 100%)" }}>
+                    <FadeIn key={activeIndustry}>
+                        <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(32px, 4vw, 42px)", fontWeight: 700, color: C.text, margin: "0 0 48px", lineHeight: 1.1, letterSpacing: "-0.02em" }}>
+                            Use Cases
                         </h2>
-                    </div>
-                </FadeIn>
-                <div style={{ display: "flex", gap: 10, marginBottom: 32, flexWrap: "wrap" }}>
-                    {cases.map((c, i) => (
-                        <button key={i} onClick={() => setActive(i)} style={{
-                            padding: "10px 22px", borderRadius: 100,
-                            border: "1px solid rgba(0,0,0,0.08)",
-                            background: active === i ? "#0A0A0A" : "#fff",
-                            color: active === i ? "#fff" : "#666",
-                            fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: 14,
-                            cursor: "pointer", transition: "all 0.25s ease",
-                            display: "flex", alignItems: "center", gap: 8,
-                        }}>
-                            <span style={{ display: "flex", alignItems: "center", opacity: active === i ? 1 : 0.6 }}>{c.icon}</span> {c.industry}
-                        </button>
-                    ))}
+
+                        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: "48px 40px" }}>
+                            {displayedCases.map((c, i) => (
+                                <div key={i} style={{ display: "flex", flexDirection: "column" }}>
+                                    <h4 style={{ fontSize: 20, fontWeight: 700, color: C.text, margin: "0 0 16px", fontFamily: "'Space Grotesk', sans-serif", lineHeight: 1.4, letterSpacing: "-0.01em" }}>
+                                        {c.title}
+                                    </h4>
+                                    <p style={{ fontSize: 16, color: C.textSoft, lineHeight: 1.6, margin: "0 0 24px", fontFamily: "'DM Sans', sans-serif", flexGrow: 1 }}>
+                                        {c.desc}
+                                    </p>
+                                    <Link to="/solutions" style={{
+                                        color: C.blue, fontWeight: 700, fontSize: 15, fontFamily: "'Space Grotesk', sans-serif",
+                                        textDecoration: "none", display: "inline-flex", alignItems: "center"
+                                    }}
+                                        onMouseEnter={e => { e.currentTarget.style.textDecoration = "underline"; }}
+                                        onMouseLeave={e => { e.currentTarget.style.textDecoration = "none"; }}>
+                                        Read more
+                                    </Link>
+                                </div>
+                            ))}
+                        </div>
+                    </FadeIn>
                 </div>
-                <div key={active} style={{ background: "#fff", borderRadius: 24, padding: "52px 48px", border: "1px solid rgba(0,0,0,0.07)", animation: "slideUp 0.35s ease" }}>
-                    <h3 style={{ fontSize: 26, fontWeight: 600, color: "#0A0A0A", margin: "0 0 16px", fontFamily: "'Space Grotesk'" }}>{cs.title}</h3>
-                    <p style={{ fontSize: 16, color: "#666", lineHeight: 1.7, margin: "0 0 36px", maxWidth: 640 }}>{cs.desc}</p>
-                    <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                        {cs.metrics.map(m => (
-                            <span key={m} style={{ padding: "9px 20px", borderRadius: 100, background: C.bgOff, border: "1px solid rgba(0,0,0,0.07)", fontSize: 13.5, fontWeight: 500, color: "#0A0A0A" }}>
-                                <span style={{ color: C.accent, marginRight: 7 }}>✓</span>{m}
-                            </span>
-                        ))}
-                    </div>
-                </div>
-                <FadeIn style={{ marginTop: 32 }}>
-                    <Link to="/solutions" className="btn-ghost" style={{ display: "inline-block", padding: "13px 28px", borderRadius: 100, fontSize: 14, textDecoration: "none" }}>View all solutions →</Link>
-                </FadeIn>
             </div>
+            <style>{`
+                @media (max-width: 820px) {
+                    .use-cases-container { flex-direction: column !important; gap: 40px !important; }
+                    .use-cases-sidebar { width: 100% !important; border-bottom: 2px solid \${C.border}; padding-bottom: 24px; position: static !important; }
+                }
+            `}</style>
         </section>
     );
 }
