@@ -83,6 +83,7 @@ const NAV_LINKS = [
     { label: "Use Cases", to: "/use-cases", dot: "#D97706" },
     { label: "Articles", to: "/articles", dot: "#E8673C" },
     { label: "Pricing", to: "/pricing", dot: "#2563EB" },
+    { label: "App", to: "/app", dot: "#22C77E" },
 ];
 
 // ─── NAV — Groundbase: clean typographic wordmark + active pill ───
@@ -123,7 +124,7 @@ export function Nav() {
             }}>
                 <nav style={{
                     width: scrolled ? "auto" : "100%",
-                    maxWidth: scrolled ? 800 : 1040,
+                    maxWidth: scrolled ? 880 : 1080,
                     display: "flex", alignItems: "center",
                     justifyContent: scrolled ? "center" : "space-between",
                     gap: scrolled ? 12 : 0,
@@ -132,7 +133,7 @@ export function Nav() {
                     WebkitBackdropFilter: "blur(20px)",
                     border: `1px solid ${scrolled ? "rgba(0,0,0,0.12)" : "rgba(0,0,0,0.05)"}`,
                     borderRadius: 100,
-                    padding: scrolled ? "5px 12px 5px 20px" : "10px 10px 10px 24px",
+                    padding: scrolled ? "5px 12px 5px 18px" : "8px 10px 8px 22px",
                     boxShadow: scrolled
                         ? "0 10px 30px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.02)"
                         : "0 2px 16px rgba(0,0,0,0.04)",
@@ -183,8 +184,8 @@ export function Nav() {
                             const isActive = loc.pathname === to;
                             return (
                                 <Link key={to} to={to} style={{
-                                    padding: scrolled ? "5px 12px" : "10px 18px",
-                                    fontSize: scrolled ? 13 : 14.5,
+                                    padding: scrolled ? "5px 10px" : "8px 14px",
+                                    fontSize: scrolled ? 13 : 14,
                                     fontWeight: isActive ? 600 : 450,
                                     color: isActive ? C.text : C.textSoft,
                                     textDecoration: "none",
@@ -207,10 +208,10 @@ export function Nav() {
                     </div>
 
                     {/* Right: log in + CTA */}
-                    <div style={{ display: "flex", alignItems: "center", gap: scrolled ? 2 : 4 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: scrolled ? 2 : 4, flexShrink: 0 }}>
                         <a href="#" className="nav-login" style={{
-                            fontSize: scrolled ? 13 : 14.5, fontWeight: 500, color: C.textSoft,
-                            textDecoration: "none", padding: scrolled ? "6px 10px" : "10px 16px",
+                            fontSize: scrolled ? 13 : 14, fontWeight: 500, color: C.textSoft,
+                            textDecoration: "none", padding: scrolled ? "6px 10px" : "8px 14px",
                             fontFamily: "'Space Grotesk', sans-serif",
                             letterSpacing: "-0.01em",
                             borderRadius: 100,
@@ -221,9 +222,9 @@ export function Nav() {
                             Log in
                         </a>
                         <Link to="/pricing" style={{
-                            padding: scrolled ? "6px 14px" : "10px 22px", borderRadius: 100,
+                            padding: scrolled ? "6px 14px" : "8px 20px", borderRadius: 100,
                             background: C.accent,
-                            color: "#fff", fontWeight: 600, fontSize: scrolled ? 12 : 13.5,
+                            color: "#fff", fontWeight: 600, fontSize: scrolled ? 12 : 13,
                             fontFamily: "'Space Grotesk', sans-serif", textDecoration: "none",
                             transition: "all 0.3s cubic-bezier(0.22, 1, 0.36, 1)",
                             letterSpacing: "-0.01em",
@@ -330,7 +331,7 @@ export function Footer() {
                         </div>
                     </div>
                     {[
-                        { t: "Product", l: [["Platform", "/platform"], ["Solutions", "/solutions"], ["Pricing", "/pricing"]] },
+                        { t: "Product", l: [["Platform", "/platform"], ["Solutions", "/solutions"], ["Pricing", "/pricing"], ["Mobile App", "/app"]] },
                         { t: "Company", l: [["About", "/about"], ["Articles", "/articles"], ["Careers", "#"], ["Contact", "#"]] },
                         { t: "Legal", l: [["Privacy", "#"], ["Terms", "#"], ["Security", "#"]] },
                     ].map(col => (
