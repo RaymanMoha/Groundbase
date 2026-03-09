@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { C, FadeIn } from "../shared";
+import { LogoMark } from "../Logo";
 
 /* ═══════════════════════════════════════════════════════
    GroundBase — Mobile App Preview Page
@@ -247,9 +248,7 @@ function VoiceScreen() {
                         }}>
                             {m.role === "ai" && (
                                 <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 5 }}>
-                                    <div style={{ width: 18, height: 18, borderRadius: 5, background: C.accent, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                                        <span style={{ fontSize: 9, fontFamily: fontDisplay, fontWeight: 700, color: "#fff" }}>G</span>
-                                    </div>
+                                    <LogoMark size={18} />
                                     <span style={{ fontFamily: font, fontSize: 10, fontWeight: 600, color: C.accent }}>GroundBase AI</span>
                                 </div>
                             )}

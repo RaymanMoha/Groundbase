@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
+import Logo, { LogoMark } from "./Logo";
 
 export const C = {
     bg: "#FCFCFA",
@@ -141,35 +142,22 @@ export function Nav() {
                     pointerEvents: "auto",
                     transform: scrolled ? "scale(0.96)" : "scale(1)",
                 }}>
-                    {/* Logo — G / Groundbase shrink on scroll */}
-                    <Link to="/" style={{
-                        textDecoration: "none",
-                        display: "flex",
-                        alignItems: "center",
-                        fontFamily: "'Space Grotesk', sans-serif",
-                        fontWeight: 700,
-                        color: C.text,
-                        letterSpacing: scrolled ? "0.02em" : "-0.04em",
-                        userSelect: "none",
-                        transition: "letter-spacing 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
-                    }}>
-                        <span style={{
-                            fontSize: scrolled ? 26 : 18,
-                            lineHeight: 1,
-                            transition: "all 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
-                            display: "inline-block",
-                            transform: scrolled ? "translateY(-0.5px)" : "translateY(0)",
-                        }}>G</span>
-                        <span style={{
-                            fontSize: 18,
-                            display: "inline-block",
+                    {/* Logo — icon+wordmark → icon-only on scroll */}
+                    <Link to="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: scrolled ? 0 : 8, transition: "gap 0.5s cubic-bezier(0.16,1,0.3,1)" }}>
+                        <div style={{ transition: "all 0.5s cubic-bezier(0.16,1,0.3,1)", transform: scrolled ? "scale(0.85)" : "scale(1)" }}>
+                            <LogoMark size={scrolled ? 30 : 28} />
+                        </div>
+                        <div style={{
+                            display: "inline-flex", alignItems: "baseline",
                             maxWidth: scrolled ? 0 : 130,
                             opacity: scrolled ? 0 : 1,
-                            overflow: "hidden",
-                            whiteSpace: "nowrap",
-                            transition: "max-width 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
-                            transform: scrolled ? "translateX(-8px)" : "translateX(0)",
-                        }}>roundbase</span>
+                            overflow: "hidden", whiteSpace: "nowrap",
+                            transition: "max-width 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.4s ease",
+                        }}>
+                            <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 17, color: C.text, letterSpacing: "-0.03em" }}>
+                                Ground<span style={{ color: C.accent }}>base</span>
+                            </span>
+                        </div>
                     </Link>
 
                     {/* Center links — clean active pill, no colored dots */}
@@ -260,10 +248,9 @@ export function Nav() {
                         display: "flex", alignItems: "center", justifyContent: "center",
                     }}>✕</button>
                     {/* Brand in mobile overlay */}
-                    <div style={{
-                        fontFamily: "'Space Grotesk'", fontWeight: 700, fontSize: 28,
-                        color: C.text, letterSpacing: "-0.03em", marginBottom: 48,
-                    }}>Groundbase</div>
+                    <div style={{ marginBottom: 48 }}>
+                        <Logo variant="full" size={38} wordSize={24} gap={12} />
+                    </div>
                     {NAV_LINKS.map(({ label, to, dot }) => (
                         <Link key={to} to={to} style={{
                             display: "block",
@@ -303,14 +290,8 @@ export function Footer() {
             <div style={{ maxWidth: 1100, margin: "0 auto" }}>
                 <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: 48, marginBottom: 64 }}>
                     <div>
-                        <Link to="/" style={{ display: "flex", alignItems: "center", gap: 8, fontFamily: "'Space Grotesk'", fontWeight: 700, fontSize: 18, color: C.text, textDecoration: "none", letterSpacing: "-0.02em", marginBottom: 16 }}>
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="3" y="14" width="8" height="7" rx="2" fill={C.accent} />
-                                <rect x="13" y="14" width="8" height="7" rx="2" fill={C.text} />
-                                <rect x="3" y="3" width="18" height="7" rx="2" fill={C.accent} fillOpacity="0.15" />
-                                <circle cx="7" cy="6.5" r="2" fill={C.accent} />
-                            </svg>
-                            Groundbase
+                        <Link to="/" style={{ textDecoration: "none", display: "inline-block", marginBottom: 16 }}>
+                            <Logo variant="full" size={28} wordSize={17} gap={9} />
                         </Link>
                         <p style={{ fontSize: 14, color: C.textSoft, lineHeight: 1.75, maxWidth: 240 }}>
                             The AI-native field operations platform for teams that keep the world running.

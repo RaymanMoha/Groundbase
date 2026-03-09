@@ -11,6 +11,7 @@ import About from "./pages/About";
 import Articles from "./pages/Articles";
 import ArticleDetail from "./pages/ArticleDetail";
 import AppPreview from "./pages/AppPreview";
+import Dashboard from "./pages/Dashboard";
 
 function ScrollToTop() {
     const { pathname } = useLocation();
@@ -34,20 +35,27 @@ export default function App() {
             <style>{GLOBAL_STYLES}</style>
             <BrowserRouter>
                 <ScrollToTop />
-                <Layout>
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/platform" element={<Platform />} />
-                        <Route path="/solutions" element={<Solutions />} />
-                        <Route path="/use-cases" element={<UseCases />} />
-                        <Route path="/use-cases/:slug" element={<UseCaseDetail />} />
-                        <Route path="/pricing" element={<Pricing />} />
-                        <Route path="/about" element={<About />} />
-                        <Route path="/articles" element={<Articles />} />
-                        <Route path="/articles/:slug" element={<ArticleDetail />} />
-                        <Route path="/app" element={<AppPreview />} />
-                    </Routes>
-                </Layout>
+                <Routes>
+                    {/* Dashboard — full-screen, no site nav/footer */}
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    {/* Marketing site — with nav + footer */}
+                    <Route path="*" element={
+                        <Layout>
+                            <Routes>
+                                <Route path="/" element={<Home />} />
+                                <Route path="/platform" element={<Platform />} />
+                                <Route path="/solutions" element={<Solutions />} />
+                                <Route path="/use-cases" element={<UseCases />} />
+                                <Route path="/use-cases/:slug" element={<UseCaseDetail />} />
+                                <Route path="/pricing" element={<Pricing />} />
+                                <Route path="/about" element={<About />} />
+                                <Route path="/articles" element={<Articles />} />
+                                <Route path="/articles/:slug" element={<ArticleDetail />} />
+                                <Route path="/app" element={<AppPreview />} />
+                            </Routes>
+                        </Layout>
+                    } />
+                </Routes>
             </BrowserRouter>
         </>
     );
